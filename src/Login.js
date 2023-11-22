@@ -20,7 +20,8 @@ function Login({ onLogin }) {
   return (
     <div className="App-header">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <div className='form-container'>
+      <form onSubmit={handleSubmit} className='profile-form'>
         <input
           type="text"
           value={username}
@@ -37,9 +38,12 @@ function Login({ onLogin }) {
         />
         <button type="submit">Login</button>
       </form>
-      <div><Link to="/">Back to main page!</Link></div>
-      <div><Link to="/sign-up">Sign-up!</Link></div>
-      <div><Link to="/reset-password">Forgot Password?</Link></div>
+      <div className="centered-links">
+        <Link to="/">Back to main page!</Link>
+        <Link to="/sign-up">Sign-up!</Link>
+        <Link to="/reset-password">Forgot Password?</Link>
+        </div>
+      </div>
     </div>
   );
 }

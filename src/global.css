@@ -9,22 +9,20 @@ body {
   }
   
 button {
-    background-color: #4CAF50; /* Green */
-    border: none;
+    background-color: #3859ff;
     color: white;
-    padding: 10px 20px;
+    padding: 4px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 14px;
+    margin: 3px 2px;
     cursor: pointer;
-    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #2146fe;
 }
 
 /* Basic input field styling */
@@ -32,13 +30,12 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"] {
-    width: 100%;
-    padding: 10px 20px;
-    margin: 12px 0;
+    width: 50%;
+    padding: 1px 10px;
+    margin: 10px 0;
     display: inline-block;
-    border: 3px solid #ccc;
-    border-radius: 4px;
     box-sizing: border-box;
+    font-size: 14px; /* Set your desired font size */
 }
 
 /* Adjust the focus style as needed */
@@ -46,7 +43,7 @@ input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
 input[type="number"]:focus {
-    border-color: #4CAF50;
+    border-color: #3859ff;
     outline: none;
 }
 
@@ -54,10 +51,8 @@ input[type="number"]:focus {
     /* Styling properties */
     padding: 8px 15px;
     margin-top: 20px;
-    background-color: #f44336; /* Red */
     color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -75,18 +70,112 @@ p{
     text-align: center;
     text-decoration: none;
     outline: none;
-    color: #fff;
-    background-color: red;
+    color: white;
+    background-color: #3859ff; /* Green, matching the other buttons */
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 9px #999;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add color transition */
 }
 
-.button-style:hover {background-color: darkred}
+.button-style:hover {
+    background-color: #2146fe; /* Match the hover color of other buttons */
+    color: white; /* Change text color on hover */
+}
 
 .button-style:active {
-    background-color: darkred;
-    box-shadow: 0 5px #444;
-    transform: translateY(4px);
+    background-color: #0e36fd; /* Match the active color of other buttons */
 }
 
+
+.form-container {
+    background-color: #333945; /* A slightly lighter color than the page's background */
+    padding: 20px; /* Adjust padding as needed */
+}
+
+a {
+    color: #3859ff; /* Green color for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2146fe; /* Hover color for links */
+}
+
+a:active {
+    color: #333; /* Active color for links */
+}
+
+h1 {
+    font-size: 36px; /* Adjust the size as needed */
+    font-weight: bold;
+    text-transform: uppercase; /* Optionally, convert text to uppercase */
+}
+
+.profile-form {
+    width: 50%; /* Adjust the width as needed */
+    margin: 10px auto; /* Center-align the forms and provide spacing */
+  }
+  
+  .profile-form input,
+  .profile-form button {
+    width: 100%; /* Make input fields and buttons fill the form width */
+    margin: 5px 0; /* Add spacing between input fields and buttons */
+  }
+  
+  .user-info-container {
+    background-color:  #333945;/* Set a background color for the container */
+    padding: 30px; /* Add padding for spacing */
+    margin-bottom: 20px; /* Add space between this container and forms */
+  }
+  
+  .user-info-container p {
+    margin: 10px 0; /* Add spacing between paragraphs */
+  }
+  
+  .user-info-container button {
+    background-color: #1733bb; /* Match the button style */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px; /* Add space above the button */
+  }
+  
+  .user-info-container button:hover {
+    background-color: #2146fe; /* Match the button hover style */
+  }
+  
+  .centered-links {
+    text-align: center; /* Center-align the links */
+    margin-top: 10px; /* Add space above the links */
+  }
+  
+  .centered-links a {
+    font-size: 14px; /* Adjust the font size as needed */
+    text-decoration: none; /* Remove underlines from links */
+    color: black; /* Set the link color to black */
+    margin: 0 7px; /* Add space between the links horizontally */
+    display: block; /* Display each link as a block element, making them stack vertically */
+  }
+  
+  .centered-links a:hover {
+    color: #222222; /* Set the link color on hover */
+  }
+  
+  /* Style for paid user content */
+.paid-user-content {
+    width: 90%;
+    margin-bottom: 200px;
+    padding: 100px; /* Add padding for spacing */
+    background-color: #7a7a7a; /* Yellow background color */
+    text-align: center; /* Center-align text */
+}
+
+/* Style for regular user content */
+.regular-user-content {
+    width: 90%;
+    margin: 20px 20px;
+    padding: 100px; /* Add padding for spacing */
+    background-color: #cfcfcf; /* Light blue background color */
+    text-align: center; /* Center-align text */
+}

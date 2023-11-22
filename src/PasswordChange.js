@@ -26,6 +26,7 @@ function PasswordChange({ onPasswordChange }) {
     return (
         <div>
             <h1>Change Password</h1>
+            <div className='form-container'>
             <form onSubmit={handleSubmit}>
                 <input
                     type="password"
@@ -51,6 +52,7 @@ function PasswordChange({ onPasswordChange }) {
                 <button type="submit">Change Password</button>
             </form>
             {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }

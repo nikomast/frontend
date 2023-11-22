@@ -18,7 +18,7 @@ const [currentPassword, setCurrentPassword] = useState('');
 const [newPassword, setNewPassword] = useState('');
 const [confirmNewPassword, setConfirmNewPassword] = useState('');
 const [changePasswordMessage, setChangePasswordMessage] = useState('');
-const [userData, setUserData] = useState({ username: '', email: '' });
+const [userData, setUserData] = useState({ username: '', email: '' , is_paid_user: false});
 const [newUsername, setNewUsername] = useState('');
 const [newEmail, setNewEmail] = useState('');
 
@@ -49,7 +49,7 @@ useEffect(() => {
 
       if (response.ok) {
           const data = await response.json();
-          setUserData({ username: data.username, email: data.email });
+          setUserData({ username: data.username, email: data.email, is_paid_user: data.is_paid_user});
       } else {
           // Handle errors or set default values
       }
@@ -175,36 +175,36 @@ const onChangePassword = async (currentPassword, newPassword) => {
 
 
 return (
-  <div>
+  <div className='App-header'>
     <h1>Profile-page</h1>
     <div>
-    <Link to="/content">Go to Exclusive Content</Link>
+      <Link to="/content">Go to Exclusive Content</Link>
     </div>
-    <div>
-        <p>Username: {userData.username}</p>
-        <p>Email: {userData.email}</p>
+    <div className="user-info-container">
+      <p>Username: {userData.username}</p> <p>Email: {userData.email}</p>
+      <p>Account Type: {userData.is_paid_user ? 'Paid' : 'Free'}</p>
+      <button onClick={handleLogout}>Logout</button>
     </div>
-    <form onSubmit={handleUpdateUsername}>
-    <input
+    <h1>edit profile</h1>
+    <form onSubmit={handleUpdateUsername} className="profile-form">
+      <input
         type="text"
         value={newUsername}
         onChange={(e) => setNewUsername(e.target.value)}
         placeholder="New Username"
-    />
-    <button type="submit">Update Username</button>
-</form>
-
-<form onSubmit={handleUpdateEmail}>
-    <input
+      />
+      <button type="submit">Update Username</button>
+    </form>
+    <form onSubmit={handleUpdateEmail} className="profile-form">
+      <input
         type="email"
         value={newEmail}
         onChange={(e) => setNewEmail(e.target.value)}
         placeholder="New Email"
-    />
-    <button type="submit">Update Email</button>
-</form>
-    <div>
-    <form onSubmit={handlePasswordChange}>
+      />
+      <button type="submit">Update Email</button>
+    </form>
+    <form onSubmit={handlePasswordChange} className="profile-form">
       <input
         type="password"
         value={currentPassword}
@@ -229,19 +229,18 @@ return (
       <button type="submit">Change Password</button>
       {changePasswordMessage && <p>{changePasswordMessage}</p>}
     </form>
-    </div>
-    <div>
+    <div className="profile-form">
       <input
         type="password"
         value={deletePassword}
         onChange={(e) => setDeletePassword(e.target.value)}
         placeholder="Confirm password to delete"
-    />
-    <button onClick={confirmAndDeleteAccount}>Delete My Account</button>
+      />
+      <button onClick={confirmAndDeleteAccount}>Delete My Account</button>
     </div>
-    <div><button onClick={handleLogout}>Logout</button></div>
   </div>
 );
+
 }
 
 

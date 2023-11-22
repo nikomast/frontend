@@ -33,8 +33,10 @@ function PasswordResetRequest({ onPasswordResetRequest }) {
     };
 
     return (
-        <div><h1>Reset password</h1>
-        <form onSubmit={handleSubmit}>
+        <div className="App-header">
+        <h1>Reset your password</h1>
+        <div className='form-container'>
+        <form onSubmit={handleSubmit} className='profile-form'>
             {<input
                 type="email"
                 value={email}
@@ -43,8 +45,9 @@ function PasswordResetRequest({ onPasswordResetRequest }) {
                 required
             />}
             <button type="submit">Send Reset Link</button>
+            <BackButton />
         </form>
-        <BackButton />
+        </div>
         </div>
     );
 }

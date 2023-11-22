@@ -35,7 +35,8 @@ function Register() {
   return (
     <div className="App-header">
       <h1>Input your information</h1>
-      <form onSubmit={handleRegister}>
+      <div className='form-container'>
+      <form onSubmit={handleRegister} className="profile-form">
       <input
           type="text"
           value={username}
@@ -65,9 +66,10 @@ function Register() {
         required
         />
         <button type="submit">Sign-up!</button>
+        <BackButton />
       </form>
       {errorMessage && <p>{errorMessage}</p>}
-      <BackButton />
+      </div>
     </div>
   );
 }
