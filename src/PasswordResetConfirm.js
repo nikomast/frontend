@@ -45,6 +45,7 @@ function PasswordResetConfirm({ onPasswordReset }) {
     };
     
     return (
+        <div className='form-container'>
         <form onSubmit={handleSubmit}>
             <input
                 type="password"
@@ -63,6 +64,7 @@ function PasswordResetConfirm({ onPasswordReset }) {
             <button type="submit">Reset Password</button>
             {message && <p>{message}</p>}
         </form>
+        </div>
     );
 }
 

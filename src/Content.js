@@ -22,10 +22,10 @@ function ContentPage() {
 
     return (
         <div className="App-header">
-            <h1>Exclusive Content</h1>
+            <div className='image-container'><h1>Exclusive Content</h1></div>
             <div><Link to="/profile" className="button-style">Profile</Link></div>
             <div className="regular-user-content">
-            <p>This content is only for logged-in users.</p>
+            <p>This content is only for logged-in users. Go to your profile, activate the paiduser option (for free) and test the paiduser experience</p>
             </div>
             <div className="paid-user-content">
             {isPaidUser && <p>This is exclusive content for our paid users.</p>}

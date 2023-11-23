@@ -164,7 +164,7 @@ h1 {
   
   /* Style for paid user content */
 .paid-user-content {
-    width: 90%;
+    width: 70%;
     margin-bottom: 200px;
     padding: 100px; /* Add padding for spacing */
     background-color: #7a7a7a; /* Yellow background color */
@@ -173,9 +173,19 @@ h1 {
 
 /* Style for regular user content */
 .regular-user-content {
-    width: 90%;
+    width: 70%;
     margin: 20px 20px;
     padding: 100px; /* Add padding for spacing */
     background-color: #cfcfcf; /* Light blue background color */
     text-align: center; /* Center-align text */
 }
+
+.image-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+  }

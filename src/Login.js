@@ -26,14 +26,14 @@ function Login({ onLogin }) {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          placeholder="demo"
           required
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="demo"
           required
         />
         <button type="submit">Login</button>

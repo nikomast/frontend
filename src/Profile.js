@@ -21,6 +21,7 @@ const [changePasswordMessage, setChangePasswordMessage] = useState('');
 const [userData, setUserData] = useState({ username: '', email: '' , is_paid_user: false});
 const [newUsername, setNewUsername] = useState('');
 const [newEmail, setNewEmail] = useState('');
+const [isPaidUser, setIsPaidUser] = useState(false);
 
 const handlePasswordChange = async (event) => {
   event.preventDefault();
@@ -37,6 +38,7 @@ const handlePasswordChange = async (event) => {
     setChangePasswordMessage('Failed to change password.');
   }
 };
+
 
 useEffect(() => {
   const fetchUserData = async () => {
@@ -102,15 +104,17 @@ const handleUpdateEmail = async (e) => {
       if (response.ok) {
           // Handle successful email update
           console.log('Email updated successfully');
-          // Update the email in the state or context if needed
+          setUserData(prevDetails => ({ ...prevDetails, email: newEmail })); // Update the email in the state
       } else {
-          // Handle errors (e.g., invalid email format)
+          // Handle errors (e.g., invalid email format or email already taken)
           console.error('Failed to update email');
       }
   } catch (error) {
       console.error('Error:', error);
   }
 };
+
+
 
 const handleDeleteAccount = async (deletePassword) => {
   const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
@@ -173,6 +177,47 @@ const onChangePassword = async (currentPassword, newPassword) => {
   }
 };
 
+const togglePaidStatus = async () => {
+  try {
+    const authToken = localStorage.getItem('authToken');
+    const response = await fetch('http://localhost:8000/api/toggle-paid-status/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.ok) {
+      // Fetch and update the user data to reflect the new paid status
+      const userDataResponse = await fetch('http://localhost:8000/api/user-data/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        },
+      });
+
+      if (userDataResponse.ok) {
+        const userData = await userDataResponse.json();
+        setUserData(userData);
+        setIsPaidUser(userData.is_paid_user);
+      } else {
+        // Handle errors or set default values
+        console.error('Error fetching user data');
+      }
+    } else {
+      // Handle error (e.g., display an error message)
+      console.error('Error toggling paid status');
+    }
+  } catch (error) {
+    console.error('Error toggling paid status:', error);
+  }
+};
+
+
+  
+
+
+
 
 return (
   <div className='App-header'>
@@ -183,6 +228,7 @@ return (
     <div className="user-info-container">
       <p>Username: {userData.username}</p> <p>Email: {userData.email}</p>
       <p>Account Type: {userData.is_paid_user ? 'Paid' : 'Free'}</p>
+      <button onClick={togglePaidStatus}>Account status</button>
       <button onClick={handleLogout}>Logout</button>
     </div>
     <h1>edit profile</h1>
