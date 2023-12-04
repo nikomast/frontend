@@ -4,9 +4,67 @@ body {
     font-family: 'Arial', sans-serif;
   }
 
-  h1 {
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* full viewport height */
+}
+
+.App-header {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers vertically */
+    align-items: center; /* Centers horizontally */
+    min-height: 100vh; /* Full height of the viewport */
+    padding: 10px; 
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #777;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+}
+
+.top-header .logo a {
     color: white;
-  }
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.top-header .navigation a,
+.top-header .auth-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.top-header .navigation a:hover,
+.top-header .auth-links a:hover {
+    text-decoration: underline;
+}
+
+
+.bottom-header {
+    background-color: #707070;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto; 
+}
+
+.bottom-header .footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.bottom-header .footer-links a:hover {
+    text-decoration: underline;
+}
   
 button {
     background-color: #3859ff;
@@ -58,7 +116,6 @@ input[type="number"]:focus {
 
 p{
     font-size: 20px;
-    color: white;
     font-family:'Times New Roman', Times, serif
 }
 
@@ -89,6 +146,10 @@ p{
 .form-container {
     background-color: #333945; /* A slightly lighter color than the page's background */
     padding: 20px; /* Adjust padding as needed */
+    width: 100%; /* Set a width or max-width for smaller screens */
+    max-width: 400px; /* Adjust as needed */
+    padding: 20px;
+    border-radius: 50px; /* Optional: Rounds the corners */
 }
 
 a {
@@ -106,6 +167,7 @@ a:active {
 }
 
 h1 {
+    color:white;
     font-size: 36px; /* Adjust the size as needed */
     font-weight: bold;
     text-transform: uppercase; /* Optionally, convert text to uppercase */
@@ -126,10 +188,11 @@ h1 {
     background-color:  #333945;/* Set a background color for the container */
     padding: 30px; /* Add padding for spacing */
     margin-bottom: 20px; /* Add space between this container and forms */
+    margin-top: 20px;
   }
   
   .user-info-container p {
-    margin: 10px 0; /* Add spacing between paragraphs */
+    margin: 5px; /* Add spacing between paragraphs */
   }
   
   .user-info-container button {
@@ -153,7 +216,7 @@ h1 {
   .centered-links a {
     font-size: 14px; /* Adjust the font size as needed */
     text-decoration: none; /* Remove underlines from links */
-    color: black; /* Set the link color to black */
+    color: rgb(255, 251, 251); /* Set the link color to black */
     margin: 0 7px; /* Add space between the links horizontally */
     display: block; /* Display each link as a block element, making them stack vertically */
   }
@@ -164,28 +227,153 @@ h1 {
   
   /* Style for paid user content */
 .paid-user-content {
-    width: 70%;
-    margin-bottom: 200px;
+    width: 95%;
+    margin: 10px 10px;
+    margin-bottom: 10px;
     padding: 100px; /* Add padding for spacing */
     background-color: #7a7a7a; /* Yellow background color */
     text-align: center; /* Center-align text */
+    height: 400px;
 }
 
 /* Style for regular user content */
 .regular-user-content {
-    width: 70%;
-    margin: 20px 20px;
+    width: 95%;
+    margin: 10px 10px;
     padding: 100px; /* Add padding for spacing */
     background-color: #cfcfcf; /* Light blue background color */
     text-align: center; /* Center-align text */
+    height: 400px;
 }
 
 .image-container {
+    position: relative;
     text-align: center;
-    margin-top: 20px;
-  }
-  
-  .image-container img {
-    max-width: 100%;
+    color: white; /* or whatever maximum height you prefer */
+    overflow: hidden; 
+}
+
+.image-container img {
+    width: 100%;
     height: auto;
+}
+
+.image-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with 50% opacity */
+    padding: 100%; /* Adjust padding as needed */
+}
+
+.main-text {
+    background-color: #383f4b;/* Example: white with some transparency */
+    margin: 20px;
+    padding: 50px;
+    text-align: center;
+    border-style: solid; 
+
+    h2{
+        color:white;
+    }
+
+    p{
+        color:white;
+    }
   }
+
+  .main-text2 {
+    background-color: #383f4b; /* Example: white with some transparency */
+    margin: 20px;
+    margin-top: -5px;
+    padding: 50px;
+    text-align:left;
+    border-style: solid;   height: 350px; /* Fixed height */
+    overflow-y: scroll; /* Allows vertical scrolling */
+
+    h2{
+        color:white;
+    }
+
+    p{
+        color:white;
+    }
+  }
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.main-text2 h2 {
+    color: white;
+}
+
+.main-text2 p {
+    color: white;
+}
+
+.main-text h2 {
+    color: white;
+}
+
+.main-text p {
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .top-header .auth-links a {
+        font-size: 15px; /* Smaller font size for mobile devices */
+    }
+    
+    .image-container img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .image-text{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5); /* Black background with 50% opacity */
+        padding: 100%; /* Adjust padding as needed */
+        border-radius: 10%;
+    }
+
+    .main-text {
+        background-color: #383f4b; /* Example: white with some transparency */
+        padding-top: 40%;
+        text-align: center;
+        margin: 2%; /* Adjust as needed to act as a divider */
+        border-style: solid; height: 500px;
+      }
+
+      .main-text2 { 
+        background-color: #383f4b; /* Example: white with some transparency */
+        margin: 2%;
+        text-align:left;
+        border-style: solid; 
+        padding: 50px;
+        border-style: solid;   height: 450px;
+      }
+
+    .main-text2 h2 {
+        color: white;
+    }
+    
+    .main-text2 p {
+        color: white;
+    }
+
+    .main-text h2 {
+        color: white;
+    }
+    
+    .main-text p {
+        color: white;
+    }
+}

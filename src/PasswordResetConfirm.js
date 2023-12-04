@@ -10,7 +10,7 @@ function PasswordResetConfirm({ onPasswordReset }) {
 
     const handlePasswordReset = async (newPassword, uid, token) => {
         // Get uid and token from URL
-        const response = await fetch(`http://localhost:8000/api/password-reset-confirm/${uid}/${token}/`, {
+        const response = await fetch(`https://loginbackend-pcvcxm53jq-lz.a.run.app/api/password-reset-confirm/${uid}/${token}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

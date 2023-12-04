@@ -7,7 +7,7 @@ function PasswordResetRequest({ onPasswordResetRequest }) {
 
     const handlePasswordResetRequest = async (email) => {
         try {
-            const response = await fetch('http://localhost:8000/api/password-reset/', {
+            const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/password-reset/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

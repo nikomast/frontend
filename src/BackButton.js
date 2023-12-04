@@ -7,8 +7,8 @@ const BackButton = () => {
     const navigate = useNavigate();
 
     return (
-        <button onClick={() => navigate('/login')}>
-            Back to Login
+        <button onClick={() => navigate('/')}>
+            Back to Main Page
         </button>
     );
 }

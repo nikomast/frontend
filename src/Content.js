@@ -1,14 +1,15 @@
 // src/ContentPage.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Header from './header';
+import Footer from './footer';
 
-function ContentPage() {
+function ContentPage({ isLoggedIn }) {
     const [isPaidUser, setIsPaidUser] = useState(false);
 
     useEffect(() => {
         const checkPaidStatus = async () => {
-            const authToken = localStorage.getItem('authToken');
-            const response = await fetch('http://localhost:8000/api/check-paid-status/', {
+            const authToken = sessionStorage.getItem('authToken');
+            const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/check-paid-status/', {
                 headers: { 'Authorization': `Bearer ${authToken}` }
             });
             if (response.ok) {
@@ -21,15 +22,20 @@ function ContentPage() {
     }, []);
 
     return (
-        <div className="App-header">
-            <div className='image-container'><h1>Exclusive Content</h1></div>
-            <div><Link to="/profile" className="button-style">Profile</Link></div>
+        <div className='App'>
+            <Header isLoggedIn={isLoggedIn}/>
+            <div className="App-header">
+            <div className='image-container'>
+                <h1>Exclusive Content</h1>
+            </div>
             <div className="regular-user-content">
-            <p>This content is only for logged-in users. Go to your profile, activate the paiduser option (for free) and test the paiduser experience</p>
+                <p>This content is only for logged-in users. Go to your profile, activate the paiduser option (for free) and test the paiduser experience</p>
             </div>
             <div className="paid-user-content">
             {isPaidUser && <p>This is exclusive content for our paid users.</p>}
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

@@ -14,10 +14,11 @@ import PasswordResetConfirm from './PasswordResetConfirm';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('authToken') !== null);
+
 
   const handleLogin = async (username, password) => {
-    const response = await fetch('http://localhost:8000/api/login/', {
+    const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,33 +28,35 @@ function App() {
 
     if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('authToken', data.access);  // Store the token
+        sessionStorage.setItem('authToken', data.access);  // Store the token
         setIsLoggedIn(true);
-        console.log('Login successful');
+        console.log("isLoggedIn state in handleLogin: ", isLoggedIn);
+        return true;
     } else {
         console.error('Login failed');
-        // Handle error, show message to user
+        return false;
     }
 };
 
 
 useEffect(() => {
-  const authToken = localStorage.getItem('authToken');
+  const authToken = sessionStorage.getItem('authToken');
   if (authToken) {
       validateToken(authToken).then(isValid => {
           if (isValid) {
               setIsLoggedIn(true);
+              console.log("isLoggedIn in useEffect: ", isLoggedIn);
           } else {
-              localStorage.removeItem('authToken');
+            sessionStorage.removeItem('authToken');
               setIsLoggedIn(false);
           }
       });
   } 
-}, []);
+},);
 
 const validateToken = async (token) => {
   try {
-      const response = await fetch('http://localhost:8000/api/validate-token/', {
+      const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/validate-token/', {
           headers: { 'Authorization': `Bearer ${token}` }
       });
       return response.ok;
@@ -69,8 +72,8 @@ return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate replace to="/content" />} />
-      <Route path="/profile" element={isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} /> : <Navigate replace to="/" />} />
-      <Route path="/content" element={isLoggedIn ? <Content /> : <Navigate replace to="/login" />} />
+      <Route path="/profile" element={isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} /> : <Navigate replace to="/login" />} />
+      <Route path="/content" element={isLoggedIn ? <Content isLoggedIn={isLoggedIn} /> : <Navigate replace to="/login" />} />
       <Route path="/sign-up" element={<Register />} />
       <Route path="/reset-password" element={<PasswordResetRequest />} />
       <Route path="/reset-password/:uid/:token" element={<PasswordResetConfirm />} />

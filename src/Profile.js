@@ -1,10 +1,13 @@
 import './App.css';
+import Header from './header';
+import Footer from './footer';
 
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Profile({setIsLoggedIn }) {
+
+function Profile({setIsLoggedIn, isLoggedIn}) {
+
   const navigate = useNavigate();
   const [deletePassword, setDeletePassword] = useState('');
 
@@ -14,6 +17,7 @@ function Profile({setIsLoggedIn }) {
     }
 };
 
+const [errorMessage, setErrorMessage] = useState('');
 const [currentPassword, setCurrentPassword] = useState('');
 const [newPassword, setNewPassword] = useState('');
 const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -35,15 +39,15 @@ const handlePasswordChange = async (event) => {
   if (success) {
     setChangePasswordMessage('Password successfully changed.');
   } else {
-    setChangePasswordMessage('Failed to change password.');
+    setChangePasswordMessage('Failed to change password (demo account cant be modified).');
   }
 };
 
 
 useEffect(() => {
   const fetchUserData = async () => {
-      const authToken = localStorage.getItem('authToken');
-      const response = await fetch('http://localhost:8000/api/user-data/', {
+      const authToken = sessionStorage.getItem('authToken');
+      const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/user-data/', {
           headers: {
               'Authorization': `Bearer ${authToken}`,
           },
@@ -53,7 +57,7 @@ useEffect(() => {
           const data = await response.json();
           setUserData({ username: data.username, email: data.email, is_paid_user: data.is_paid_user});
       } else {
-          // Handle errors or set default values
+        setErrorMessage('New login is needed.');
       }
   };
 
@@ -62,10 +66,10 @@ useEffect(() => {
 
 const handleUpdateUsername = async (e) => {
   e.preventDefault();
-  const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
+  const authToken = sessionStorage.getItem('authToken'); // Retrieve the stored token
 
   try {
-      const response = await fetch('http://localhost:8000/api/update-username/', {
+      const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/update-username/', {
           method: 'POST',
           headers: {
               'Authorization': `Bearer ${authToken}`,
@@ -76,23 +80,21 @@ const handleUpdateUsername = async (e) => {
 
       if (response.ok) {
           // Handle successful username update
-          console.log('Username updated successfully');
           setUserData(prevDetails => ({ ...prevDetails, username: newUsername }));
       } else {
-          // Handle errors (e.g., username already taken)
-          console.error('Failed to update username');
+        setErrorMessage('Username update failed (demo account cant be modified).');
       }
   } catch (error) {
-      console.error('Error:', error);
+      //console.error('Error:', error);
   }
 };
 
 const handleUpdateEmail = async (e) => {
   e.preventDefault();
-  const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
+  const authToken = sessionStorage.getItem('authToken'); // Retrieve the stored token
 
   try {
-      const response = await fetch('http://localhost:8000/api/update-email/', {
+      const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/update-email/', {
           method: 'POST',
           headers: {
               'Authorization': `Bearer ${authToken}`,
@@ -103,23 +105,19 @@ const handleUpdateEmail = async (e) => {
 
       if (response.ok) {
           // Handle successful email update
-          console.log('Email updated successfully');
           setUserData(prevDetails => ({ ...prevDetails, email: newEmail })); // Update the email in the state
       } else {
-          // Handle errors (e.g., invalid email format or email already taken)
-          console.error('Failed to update email');
+        setErrorMessage('Email could not be updated (demo account cant be modified).');
       }
   } catch (error) {
-      console.error('Error:', error);
+    ;
   }
 };
 
-
-
 const handleDeleteAccount = async (deletePassword) => {
-  const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
+  const authToken = sessionStorage.getItem('authToken'); // Retrieve the stored token
 
-  const response = await fetch('http://localhost:8000/api/delete-account/', {
+  const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/delete-account/', {
       method: 'DELETE',
       headers: {
           'Authorization': `Bearer ${authToken}`, // Include the token in the header
@@ -130,18 +128,18 @@ const handleDeleteAccount = async (deletePassword) => {
 
   if (response.ok) {
       // Handle successful account deletion
-      localStorage.removeItem('authToken'); // Clear the token from storage
+      sessionStorage.removeItem('authToken'); // Clear the token from storage
       setIsLoggedIn(false); // Update the state to reflect that the user is logged out
       navigate('/'); // Redirect to login page
   } else {
-      // Handle errors, such as showing a message to the user
+    setErrorMessage('Account deletion failed (demo account cant be modified).');
   }
 };
 
 const handleLogout = async () => {
-  const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
+  const authToken = sessionStorage.getItem('authToken'); // Retrieve the stored token
 
-  const response = await fetch('http://localhost:8000/api/logout/', {
+  const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/logout/', {
       method: 'POST',
       headers: {
           'Authorization': `Bearer ${authToken}`, // Include the token in the header
@@ -150,18 +148,18 @@ const handleLogout = async () => {
 
   if (response.ok) {
       // Handle successful logout
-      localStorage.removeItem('authToken'); // Clear the token from storage
+      sessionStorage.removeItem('authToken'); // Clear the token from storage
       setIsLoggedIn(false); // Update the state to reflect that the user is logged out
       navigate('/'); // Redirect to login page
   } else {
-      // Handle errors
+    setErrorMessage('Something went wrong. Refresh the page.');
   }
 };
 
 const onChangePassword = async (currentPassword, newPassword) => {
   try {
-      const authToken = localStorage.getItem('authToken'); // Retrieve the stored token
-      const response = await fetch('http://localhost:8000/api/change-password/', {
+      const authToken = sessionStorage.getItem('authToken'); // Retrieve the stored token
+      const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/change-password/', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -172,15 +170,15 @@ const onChangePassword = async (currentPassword, newPassword) => {
 
       return response.ok;
   } catch (error) {
-      console.error("Error during password change:", error);
+    setErrorMessage('Password change failed (demo account cant be modified).');
       return false;
   }
 };
 
 const togglePaidStatus = async () => {
   try {
-    const authToken = localStorage.getItem('authToken');
-    const response = await fetch('http://localhost:8000/api/toggle-paid-status/', {
+    const authToken = sessionStorage.getItem('authToken');
+    const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/toggle-paid-status/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -190,7 +188,7 @@ const togglePaidStatus = async () => {
 
     if (response.ok) {
       // Fetch and update the user data to reflect the new paid status
-      const userDataResponse = await fetch('http://localhost:8000/api/user-data/', {
+      const userDataResponse = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/user-data/', {
         headers: {
           'Authorization': `Bearer ${authToken}`,
         },
@@ -202,36 +200,32 @@ const togglePaidStatus = async () => {
         setIsPaidUser(userData.is_paid_user);
       } else {
         // Handle errors or set default values
-        console.error('Error fetching user data');
+        setErrorMessage('Something went wrong. Refresh the page.');
       }
     } else {
       // Handle error (e.g., display an error message)
-      console.error('Error toggling paid status');
+      setErrorMessage('Something went wrong. Refresh the page.');
     }
   } catch (error) {
-    console.error('Error toggling paid status:', error);
+    setErrorMessage('Something went wrong. Refresh the page.');
   }
 };
 
 
-  
-
-
-
 
 return (
+  <div className='App'>
+  <Header isLoggedIn={isLoggedIn} currentPage="profile" />
   <div className='App-header'>
-    <h1>Profile-page</h1>
-    <div>
-      <Link to="/content">Go to Exclusive Content</Link>
-    </div>
     <div className="user-info-container">
+      <h1>Profile information</h1>
       <p>Username: {userData.username}</p> <p>Email: {userData.email}</p>
       <p>Account Type: {userData.is_paid_user ? 'Paid' : 'Free'}</p>
       <button onClick={togglePaidStatus}>Account status</button>
       <button onClick={handleLogout}>Logout</button>
     </div>
     <h1>edit profile</h1>
+    {errorMessage && <div className="error-message">{errorMessage}</div>}
     <form onSubmit={handleUpdateUsername} className="profile-form">
       <input
         type="text"
@@ -284,6 +278,8 @@ return (
       />
       <button onClick={confirmAndDeleteAccount}>Delete My Account</button>
     </div>
+  </div>
+  <Footer/>
   </div>
 );
 

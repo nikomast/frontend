@@ -14,7 +14,7 @@ function Register() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:8000/api/register/', {
+    const response = await fetch('https://loginbackend-pcvcxm53jq-lz.a.run.app/api/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,12 +23,10 @@ function Register() {
     });
   
     if (response.ok) {
-      console.log('Registration successful');
+      //console.log('Registration successful');
       navigate('/'); // Redirect to login page
     } else {
-      console.error('Registration failed');
-      const errorData = await response.json();
-      setErrorMessage(errorData.detail || 'Registration failed');
+      setErrorMessage('Registeration failed. Please check the information.');
     }
   };
 
@@ -65,10 +63,10 @@ function Register() {
         placeholder="Confirm Password"
         required
         />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <button type="submit">Sign-up!</button>
         <BackButton />
       </form>
-      {errorMessage && <p>{errorMessage}</p>}
       </div>
     </div>
   );
